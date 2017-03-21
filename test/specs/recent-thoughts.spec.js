@@ -1,4 +1,4 @@
-  (function() {
+(function() {
   'use strict';
   //this is where i created the 3 thoughts
   let expect = window.chai.expect;
@@ -42,9 +42,9 @@
         //document.createElement('body');
         document.querySelector('body').appendChild(mainTag);
       });
-    //now im removing it -idempoden
-    //if i dont remove it as i go to my other tests having that
-    //fixture there might cause failures
+      //now im removing it -idempoden
+      //if i dont remove it as i go to my other tests having that
+      //fixture there might cause failures
       afterEach(function() {
         let mainTag = document.querySelector('main');
         mainTag.parentNode.removeChild(mainTag);
@@ -84,51 +84,51 @@
     describe('get recent', function(){
       let server;
 
-            beforeEach(function(){
-                server = sinon.fakeServer.create();
-                server.autoRespond = true;
-                server.respondWith(
-                    'GET',
-                    'http://thoughter.herokuapp.com/api/Thoughts?filter={"order":"createTime DESC","limit":3}',
-                    [
-                        200,
-                        { 'Content-Type': 'application/json' },
-                        //moching out what the fetch returns in its response
-                        '["hi", "bye", "hibye"]'
-                    ]
-                    //the function that im testing fetches at a specific url so to test that fetch
-                    //setting up a fake server connected to that specific url so that the real
-                    //function hits server and not the API
-                    //
-                );
-            });
+      beforeEach(function(){
+        server = sinon.fakeServer.create();
+        server.autoRespond = true;
+        server.respondWith(
+          'GET',
+          'http://thoughter.herokuapp.com/api/Thoughts?filter={"order":"createTime DESC","limit":3}',
+          [
+            200,
+            { 'Content-Type': 'application/json' },
+            //moching out what the fetch returns in its response
+            '["hi", "bye", "hibye"]'
+          ]
+          //the function that im testing fetches at a specific url so to test that fetch
+          //setting up a fake server connected to that specific url so that the real
+          //function hits server and not the API
+          //
+        );
+      });
 
-            afterEach(function() {
-                server.restore();
-            });
-            it('should return data back from server', function(){
-              let result = window.thoughter.getRecent();
-                  // expect( result ).to.be.an('object');
-                  expect(result.then).to.be.a('function');
-                  expect(result.catch).to.be.a('function');
+      afterEach(function() {
+        server.restore();
+      });
+      it('should return data back from server', function(){
+        let result = window.thoughter.getRecent();
+        // expect( result ).to.be.an('object');
+        expect(result.then).to.be.a('function');
+        expect(result.catch).to.be.a('function');
 
-                  result
-                      .then(function(data) {
-                          expect(data).to.be.an('array');
-                          expect(data.length).to.equal(3);
-                          //expect data and we know data is an
-                          //array and has a length of 3
-                          //expect the first index in the data array
-                          //to equal hi and it should equal hi because
-                          //thats what i told  my moc server to type
-                          expect(data[0]).to.equal('hi');
-                          tellMochaWeAreDone();
-                      })
-                      .catch(function(err) {
-                          tellMochaWeAreDone(err);
-                      });
-              });
-            });
-
+        result
+        .then(function(data) {
+          expect(data).to.be.an('array');
+          expect(data.length).to.equal(3);
+          //expect data and we know data is an
+          //array and has a length of 3
+          //expect the first index in the data array
+          //to equal hi and it should equal hi because
+          //thats what i told  my moc server to type
+          expect(data[0]).to.equal('hi');
+          tellMochaWeAreDone();
+        })
+        .catch(function(err) {
+          tellMochaWeAreDone(err);
+        });
+      });
     });
-  }());
+
+  });
+}());
